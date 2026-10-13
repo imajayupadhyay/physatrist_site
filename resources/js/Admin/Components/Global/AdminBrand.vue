@@ -1,0 +1,24 @@
+<script setup>
+defineProps({
+    // Light text for the dark sidebar.
+    dark: { type: Boolean, default: false },
+});
+</script>
+
+<template>
+    <div class="flex items-center gap-3">
+        <svg viewBox="0 0 64 64" class="size-10 shrink-0" :class="dark ? 'text-sage-soft' : 'text-forest'" aria-hidden="true">
+            <path d="M14 22 A22 22 0 0 1 54 30" fill="none" stroke="#B8925A" stroke-width="2.2" stroke-linecap="round" />
+            <circle cx="27" cy="17" r="2.6" fill="currentColor" />
+            <path d="M30 56 C29 44 31 34 38 26" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" />
+            <path d="M30 40 C19 41 9 34 7 26 C17 25 27 30 30 40Z" fill="currentColor" />
+            <path d="M32 30 C29 22 33 13 42 10 C44 19 40 27 32 30Z" fill="#B8925A" />
+            <path d="M30 47 C24 49 18 47 16 43 C21 41 27 43 30 47Z" fill="currentColor" />
+            <path d="M44 22 C48 25 47 29 49 32 L46 34 C47 38 45 41 40 41" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <div class="leading-tight">
+            <p class="text-base font-semibold" :class="dark ? 'text-white' : 'text-forest-deep'">Mind Essence</p>
+            <p class="text-[11px] font-medium tracking-[0.2em] uppercase" :class="dark ? 'text-white/50' : 'text-slate-400'">Admin Panel</p>
+        </div>
+    </div>
+</template>

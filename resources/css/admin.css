@@ -1,0 +1,20 @@
+@import 'tailwindcss';
+
+@source '../views/admin/**/*.blade.php';
+@source '../js/Admin/**/*.vue';
+
+/* Admin panel theme: Poppins everywhere + the website's brand colours. */
+@theme {
+    --font-sans: 'Poppins', ui-sans-serif, system-ui, sans-serif;
+
+    --color-forest: #2e4636;
+    --color-forest-deep: #1f3127;
+    --color-sage-soft: #e6ebe2;
+    --color-gold: #b8925a;
+    --color-gold-soft: #e9dcc6;
+}
+
+@layer base {
+    html { font-family: var(--font-sans); }
+    body { @apply bg-slate-50 text-slate-800 antialiased; }
+}
