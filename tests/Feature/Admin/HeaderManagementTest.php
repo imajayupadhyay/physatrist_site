@@ -233,6 +233,64 @@ class HeaderManagementTest extends TestCase
         $this->get('/')->assertInertia(fn (Assert $page) => $page->where('header.cta', null));
     }
 
+    public function test_website_receives_default_top_bar(): void
+    {
+        $this->get('/')->assertInertia(fn (Assert $page) => $page
+            ->where('header.topbar', [
+                'showHours' => true,
+                'text' => 'In-clinic & online sessions',
+                'showPhone' => true,
+                'showEmail' => true,
+            ])
+            ->where('contact.hours', 'Mon – Sat · 10:00 AM – 7:00 PM'));
+    }
+
+    public function test_admin_can_update_the_top_bar(): void
+    {
+        $this->actingAs($this->admin, 'admin')->get('/secure-admin/header')
+            ->assertInertia(fn (Assert $page) => $page
+                ->where('settings.topbar_text', 'In-clinic & online sessions')
+                ->where('contact.email', 'lovleenasharma49@gmail.com'));
+
+        $this->actingAs($this->admin, 'admin')
+            ->put('/secure-admin/header', $this->settingsPayload([
+                'topbar_text' => '  Now booking weekend sessions  ',
+                'topbar_show_hours' => false,
+                'topbar_show_email' => false,
+            ]))
+            ->assertSessionHasNoErrors();
+
+        $this->get('/')->assertInertia(fn (Assert $page) => $page
+            ->where('header.topbar', [
+                'showHours' => false,
+                'text' => 'Now booking weekend sessions',
+                'showPhone' => true,
+                'showEmail' => false,
+            ]));
+
+        // Switched off, or nothing left to show → no top bar.
+        $this->actingAs($this->admin, 'admin')->put('/secure-admin/header', $this->settingsPayload(['topbar_visible' => false]));
+        $this->get('/')->assertInertia(fn (Assert $page) => $page->where('header.topbar', null));
+
+        $this->actingAs($this->admin, 'admin')->put('/secure-admin/header', $this->settingsPayload([
+            'topbar_show_hours' => false,
+            'topbar_text' => '',
+            'topbar_show_phone' => false,
+            'topbar_show_email' => false,
+        ]))->assertSessionHasNoErrors();
+        $this->get('/')->assertInertia(fn (Assert $page) => $page->where('header.topbar', null));
+
+        // Other header settings are unaffected.
+        $this->get('/')->assertInertia(fn (Assert $page) => $page->where('header.cta.label', 'Book a Session'));
+    }
+
+    public function test_top_bar_message_is_limited(): void
+    {
+        $this->actingAs($this->admin, 'admin')
+            ->put('/secure-admin/header', $this->settingsPayload(['topbar_text' => str_repeat('a', 81)]))
+            ->assertSessionHasErrors('topbar_text');
+    }
+
     public function test_header_settings_validation(): void
     {
         $this->actingAs($this->admin, 'admin')

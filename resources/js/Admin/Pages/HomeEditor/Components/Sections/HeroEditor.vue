@@ -60,7 +60,7 @@ const newSlide = () => ({
             <FormInput id="card-name" v-model="form.card.name" label="Name" :error="form.errors['card.name']" :maxlength="80" required />
         </div>
         <FormTextarea id="card-details" v-model="form.card.details" label="Details" :rows="2" :error="form.errors['card.details']" :maxlength="200" hint="One line per row." />
-        <FormInput id="card-badge" v-model="form.card.badge" label="Badge" placeholder="RCI Reg. No. A66045" :error="form.errors['card.badge']" :maxlength="60" />
+        <FormInput id="card-badge" v-model="form.card.badge" label="Badge" placeholder="Leave blank to hide" :error="form.errors['card.badge']" :maxlength="60" />
         <div class="grid gap-4 sm:grid-cols-2">
             <FormInput id="card-link-label" v-model="form.card.link_label" label="Link text" :error="form.errors['card.link_label']" :maxlength="40" />
             <FormInput id="card-link-url" v-model="form.card.link_url" label="Link" placeholder="#about" :error="form.errors['card.link_url']" :maxlength="255" />

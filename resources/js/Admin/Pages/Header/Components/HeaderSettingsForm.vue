@@ -1,19 +1,25 @@
 <script setup>
-import { useForm } from '@inertiajs/vue3';
+import { Link, useForm } from '@inertiajs/vue3';
 import FormInput from '@/Admin/Components/Global/FormInput.vue';
 import FormSection from '@/Admin/Components/Global/FormSection.vue';
 import FormTextarea from '@/Admin/Components/Global/FormTextarea.vue';
 import ImageUpload from '@/Admin/Components/Global/ImageUpload.vue';
 import ToggleSwitch from '@/Admin/Components/Global/ToggleSwitch.vue';
 
-// Logo + CTA button ("brand" tab) and mega-menu promo ("mega" tab): one form, one save.
+// Top bar ("topbar" tab), logo + CTA button ("brand" tab) and mega-menu promo ("mega" tab): one form, one save.
 const props = defineProps({
     settings: { type: Object, required: true },
+    contact: { type: Object, required: true },
     section: { type: String, required: true },
 });
 
 const s = props.settings;
 const form = useForm({
+    topbar_visible: s.topbar_visible ?? true,
+    topbar_show_hours: s.topbar_show_hours ?? true,
+    topbar_text: s.topbar_text ?? '',
+    topbar_show_phone: s.topbar_show_phone ?? true,
+    topbar_show_email: s.topbar_show_email ?? true,
     logo_file: null,
     remove_logo: false,
     logo_alt: s.logo_alt ?? '',
@@ -53,7 +59,35 @@ const save = () => {
 
 <template>
     <form class="space-y-6 pb-24" @submit.prevent="save">
-        <template v-if="section === 'brand'">
+        <FormSection v-if="section === 'topbar'" id="topbar" title="Top bar" description="The dark strip above the menu, on every page.">
+            <ToggleSwitch v-model="form.topbar_visible" label="Show the top bar" />
+            <template v-if="form.topbar_visible">
+                <div class="space-y-4 border-t border-slate-100 pt-5">
+                    <p class="text-xs font-medium tracking-wide text-slate-400 uppercase">Left side</p>
+                    <ToggleSwitch v-model="form.topbar_show_hours" label="Opening hours" :description="contact.hours || 'No hours set yet.'" />
+                    <FormInput
+                        id="topbar_text"
+                        v-model="form.topbar_text"
+                        label="Message"
+                        placeholder="In-clinic & online sessions"
+                        :error="form.errors.topbar_text"
+                        :maxlength="80"
+                        hint="Short text after the hours. Leave blank to hide. The left side is hidden on phones when a phone number or email is shown."
+                    />
+                </div>
+                <div class="space-y-4 border-t border-slate-100 pt-5">
+                    <p class="text-xs font-medium tracking-wide text-slate-400 uppercase">Right side</p>
+                    <ToggleSwitch v-model="form.topbar_show_phone" label="Phone number" :description="contact.phones[0]?.display || 'No phone number set yet.'" />
+                    <ToggleSwitch v-model="form.topbar_show_email" label="Email address" :description="contact.email || 'No email set yet.'" />
+                </div>
+                <p class="rounded-lg bg-slate-50 px-4 py-3 text-xs text-slate-500">
+                    Hours, phone and email are the site-wide contact details. Change them in
+                    <Link href="/secure-admin/footer?tab=contact" class="font-medium text-forest underline underline-offset-2">Footer → Contact &amp; social</Link>.
+                </p>
+            </template>
+        </FormSection>
+
+        <template v-else-if="section === 'brand'">
             <FormSection id="logo" title="Logo" description="Upload your own logo, or keep the leaf mark with the brand name.">
                 <ImageUpload
                     id="logo"
@@ -105,7 +139,7 @@ const save = () => {
         <div class="fixed inset-x-0 bottom-0 z-20 border-t border-slate-200 bg-white/95 backdrop-blur lg:left-64">
             <div class="flex items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
                 <p class="text-sm" :class="form.hasErrors ? 'text-red-600' : form.isDirty ? 'text-amber-600' : 'text-slate-400'">
-                    {{ form.hasErrors ? 'Please fix the highlighted fields (check both tabs).' : form.isDirty ? 'You have unsaved changes.' : 'All changes saved.' }}
+                    {{ form.hasErrors ? 'Please fix the highlighted fields (check every tab).' : form.isDirty ? 'You have unsaved changes.' : 'All changes saved.' }}
                 </p>
                 <button type="submit" :disabled="form.processing || !form.isDirty" class="rounded-lg bg-forest px-5 py-2.5 text-sm font-medium text-white transition hover:bg-forest-deep disabled:opacity-50">
                     {{ form.processing ? 'Saving…' : 'Save settings' }}

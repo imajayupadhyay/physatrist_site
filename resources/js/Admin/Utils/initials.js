@@ -1,4 +1,4 @@
-// "Loveleena Sharma" → "LS"
+// "Lovleena Sharma" → "LS"
 export const initials = (name = '') =>
     name
         .trim()

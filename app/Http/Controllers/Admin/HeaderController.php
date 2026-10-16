@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\UpdateHeaderRequest;
 use App\Models\MenuItem;
 use App\Models\Service;
 use App\Models\Setting;
+use App\Support\Contact;
 use App\Support\Header;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
@@ -14,7 +15,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 
 /**
- * Admin → Header: logo, CTA button, mega-menu promo and the menu editor.
+ * Admin → Header: top bar, logo, CTA button, mega-menu promo and the menu editor.
  */
 class HeaderController extends Controller
 {
@@ -33,6 +34,8 @@ class HeaderController extends Controller
                     'children' => $item->children->map(fn (MenuItem $child) => self::presentItem($child))->values(),
                 ]),
             'services' => Service::ordered()->get(['id', 'title', 'slug', 'icon', 'is_published']),
+            // Read-only in the Top bar tab (edited in Footer → Contact & social).
+            'contact' => Contact::forWebsite(),
         ]);
     }
 

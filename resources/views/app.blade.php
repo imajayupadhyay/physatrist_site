@@ -20,7 +20,7 @@
                 'hasMap' => $contact['mapsUrl'],
                 'openingHours' => 'Mo-Sa 10:00-19:00',
                 'sameAs' => array_values(array_filter([$contact['instagram'], $contact['youtube'], $contact['facebook'], $contact['linkedin']])),
-                'employee' => ['@type' => 'Person', 'name' => 'Loveleena Sharma', 'jobTitle' => 'RCI Registered Clinical Psychologist'],
+                'employee' => ['@type' => 'Person', 'name' => 'Lovleena Sharma', 'jobTitle' => 'RCI Registered Clinical Psychologist'],
             ]), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG) !!}</script>
         @endif
 

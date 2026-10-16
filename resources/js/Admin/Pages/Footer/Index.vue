@@ -57,7 +57,9 @@ const tabs = [
     { key: 'contact', label: 'Contact & social', prefixes: ['contact.', 'contact_heading', 'show_website', 'show_hours'] },
     { key: 'bottom', label: 'Helpline & bottom bar', prefixes: ['helpline', 'copyright', 'bottom'] },
 ];
-const tab = ref('content');
+// `?tab=contact` opens a tab directly (e.g. from Header → Top bar).
+const requested = new URLSearchParams(window.location.search).get('tab');
+const tab = ref(tabs.some((t) => t.key === requested) ? requested : 'content');
 const errorCount = (t) => Object.keys(form.errors).filter((key) => t.prefixes.some((p) => key.startsWith(p))).length;
 
 const save = () => {

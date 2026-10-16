@@ -54,7 +54,7 @@ class FooterManagementTest extends TestCase
             ->where('footer.columns.1.heading', 'Services')
             ->where('footer.columns.1.links.0.href', '/services/anxiety-stress-depression')
             ->has('footer.columns.1.links', 6)
-            ->where('footer.credentials.name', 'Ms. Loveleena Sharma')
+            ->where('footer.credentials.name', 'Ms. Lovleena Sharma')
             ->has('footer.credentials.lines', 2)
             ->where('footer.copyright', '© '.now()->year.' Mind Essence Wellness Centre. All rights reserved.')
             ->where('contact.phones.0', ['display' => '+91 82853 54608', 'tel' => '+918285354608'])

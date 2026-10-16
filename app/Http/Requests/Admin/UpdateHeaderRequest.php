@@ -9,9 +9,13 @@ class UpdateHeaderRequest extends FormRequest
 {
     protected function prepareForValidation(): void
     {
-        $this->merge(collect(['cta_visible', 'cta_new_tab', 'mega_promo_visible', 'remove_logo'])
+        $this->merge(collect(['topbar_visible', 'topbar_show_hours', 'topbar_show_phone', 'topbar_show_email', 'cta_visible', 'cta_new_tab', 'mega_promo_visible', 'remove_logo'])
             ->mapWithKeys(fn ($key) => [$key => $this->boolean($key)])
             ->all());
+
+        if (is_string($this->input('topbar_text'))) {
+            $this->merge(['topbar_text' => trim($this->input('topbar_text'))]);
+        }
     }
 
     /**
@@ -22,6 +26,13 @@ class UpdateHeaderRequest extends FormRequest
     public function rules(): array
     {
         return [
+            // Top bar
+            'topbar_visible' => ['boolean'],
+            'topbar_show_hours' => ['boolean'],
+            'topbar_text' => ['nullable', 'string', 'max:80'],
+            'topbar_show_phone' => ['boolean'],
+            'topbar_show_email' => ['boolean'],
+
             // Logo
             'logo_file' => ['nullable', 'file', 'mimes:png,jpg,jpeg,webp', 'max:2048'],
             'remove_logo' => ['boolean'],

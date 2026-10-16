@@ -11,7 +11,7 @@ return [
     'home_services' => [
         'eyebrow' => 'Areas of practice',
         'heading' => 'Focused care, grounded in expertise',
-        'lead' => "From individual, psychological and mental health counselling to specialised therapy, Loveleena's practice centres on a defined set of concerns, so every client receives care backed by genuine clinical experience.",
+        'lead' => "From individual, psychological and mental health counselling to specialised therapy, Lovleena's practice centres on a defined set of concerns, so every client receives care backed by genuine clinical experience.",
         'card_link_label' => 'Learn more',
         'also_label' => 'Also within our care',
         'also_items' => [
@@ -32,6 +32,12 @@ return [
 
     // Website header (menu items live in the menu_items table)
     'header' => [
+        // Dark strip above the menu. Hours, phone and email come from `contact`.
+        'topbar_visible' => true,
+        'topbar_show_hours' => true,
+        'topbar_text' => 'In-clinic & online sessions',
+        'topbar_show_phone' => true,
+        'topbar_show_email' => true,
         'logo' => null, // uploaded image path; null = default leaf mark + brand text
         'logo_alt' => 'Mind Essence Wellness Centre',
         'logo_height' => 46, // px, for an uploaded logo
@@ -44,7 +50,7 @@ return [
         // Side panel inside mega menus
         'mega_promo_visible' => true,
         'mega_promo_title' => 'Not sure where to start?',
-        'mega_promo_text' => 'Book a 50-minute consultation and Loveleena will help you find the right support.',
+        'mega_promo_text' => 'Book a 50-minute consultation and Lovleena will help you find the right support.',
         'mega_promo_cta_label' => 'Book a consultation',
         'mega_promo_cta_url' => '/#appointment',
     ],
@@ -73,8 +79,8 @@ return [
         'brand_name' => 'Mind Essence',
         'brand_tagline' => 'WELLNESS CENTRE',
         'about_text' => 'Counselling · Therapy · Psychological Assessment · Mental Wellbeing',
-        'credentials_name' => 'Ms. Loveleena Sharma',
-        'credentials_text' => "RCI Registered Clinical Psychologist\nM.Phil. Clinical Psychology · Reg. No. A66045",
+        'credentials_name' => 'Ms. Lovleena Sharma',
+        'credentials_text' => "RCI Registered Clinical Psychologist\nM.Phil. Clinical Psychology",
         'show_socials' => true,
         // Link columns between the brand column and the contact column (max 3).
         // type "links" = custom links, type "services" = published services (automatic).
@@ -84,7 +90,7 @@ return [
                 'type' => 'links',
                 'limit' => null,
                 'links' => [
-                    ['label' => 'About Loveleena', 'url' => '/#about', 'new_tab' => false],
+                    ['label' => 'About Lovleena', 'url' => '/#about', 'new_tab' => false],
                     ['label' => 'Services', 'url' => '/#services', 'new_tab' => false],
                     ['label' => 'Assessments', 'url' => '/#assessment', 'new_tab' => false],
                     ['label' => 'Our Space', 'url' => '/#space', 'new_tab' => false],

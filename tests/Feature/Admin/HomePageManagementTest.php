@@ -46,7 +46,7 @@ class HomePageManagementTest extends TestCase
             ->has('home.hero.slides', 3)
             ->where('home.hero.slides.0.title', 'A healthier mind,')
             ->where('home.trust.items.0.value', '6+')
-            ->where('home.about.heading', 'Ms. Loveleena Sharma')
+            ->where('home.about.heading', 'Ms. Lovleena Sharma')
             ->has('home.assessment.types', 6)
             ->has('home.steps.items', 3)
             ->has('home.space.photos', 4)
@@ -89,7 +89,7 @@ class HomePageManagementTest extends TestCase
             ->has('home.trust.items', 1) // empty row dropped
             ->where('home.trust.items.0.value', '10+')
             ->where('home.steps.heading', 'Three easy steps')
-            ->where('home.about.heading', 'Ms. Loveleena Sharma')); // untouched section keeps defaults
+            ->where('home.about.heading', 'Ms. Lovleena Sharma')); // untouched section keeps defaults
     }
 
     public function test_sections_can_be_hidden(): void

@@ -177,7 +177,7 @@ class UserManagementTest extends TestCase
     {
         $this->actingAs($this->me, 'admin')
             ->from('/secure-admin/users')
-            ->put('/secure-admin/account', ['name' => 'Loveleena', 'email' => 'me@example.com'])
+            ->put('/secure-admin/account', ['name' => 'Lovleena', 'email' => 'me@example.com'])
             ->assertSessionHasNoErrors()
             ->assertSessionHas('success');
 

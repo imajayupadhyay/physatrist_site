@@ -1,15 +1,36 @@
 <script setup>
-// Miniature of the live header (top-level menu, logo, CTA). Reflects saved settings.
-defineProps({
+import { computed } from 'vue';
+
+// Miniature of the live header (top bar, top-level menu, logo, CTA). Reflects saved settings.
+const props = defineProps({
     settings: { type: Object, required: true },
     menu: { type: Array, required: true },
+    contact: { type: Object, required: true },
 });
+
+// Same rules as the website's AppHeader.vue.
+const topbarLeft = computed(() =>
+    [props.settings.topbar_show_hours && props.contact.hours, props.settings.topbar_text].filter(Boolean).join(' \u00a0·\u00a0 '),
+);
+const topbarPhone = computed(() => (props.settings.topbar_show_phone ? props.contact.phones[0]?.display : null));
+const topbarEmail = computed(() => (props.settings.topbar_show_email ? props.contact.email : null));
+const showTopbar = computed(() => props.settings.topbar_visible && (topbarLeft.value || topbarPhone.value || topbarEmail.value));
 </script>
 
 <template>
     <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white">
         <p class="border-b border-slate-100 px-5 py-2.5 text-xs font-medium tracking-wide text-slate-400 uppercase">Preview</p>
         <div class="overflow-x-auto bg-[#F8F4EC]">
+            <div v-if="showTopbar" class="flex min-w-[720px] items-center justify-between gap-6 bg-forest-deep px-6 py-2 text-[11px] tracking-wide text-[#d9e0d6]">
+                <span class="flex items-center gap-1.5 whitespace-nowrap">
+                    <svg v-if="settings.topbar_show_hours && contact.hours" class="size-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></svg>
+                    {{ topbarLeft }}
+                </span>
+                <span class="flex items-center gap-5 whitespace-nowrap">
+                    <span v-if="topbarPhone">{{ topbarPhone }}</span>
+                    <span v-if="topbarEmail">{{ topbarEmail }}</span>
+                </span>
+            </div>
             <div class="flex min-w-[720px] items-center justify-between gap-6 px-6 py-4">
                 <div class="flex shrink-0 items-center gap-2.5">
                     <img v-if="settings.logo_url" :src="settings.logo_url" :alt="settings.logo_alt" class="w-auto object-contain" :style="{ height: `${Math.min(settings.logo_height, 46)}px` }" />

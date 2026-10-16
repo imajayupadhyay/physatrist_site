@@ -10,10 +10,12 @@ defineProps({
     settings: { type: Object, required: true },
     menu: { type: Array, required: true },
     services: { type: Array, required: true },
+    contact: { type: Object, required: true },
 });
 
 const tabs = [
     { key: 'menu', label: 'Menu' },
+    { key: 'topbar', label: 'Top bar' },
     { key: 'brand', label: 'Logo & button' },
     { key: 'mega', label: 'Mega menu panel' },
 ];
@@ -27,7 +29,7 @@ const tab = ref('menu');
         <div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
                 <h2 class="text-xl font-semibold text-slate-800">Website header</h2>
-                <p class="mt-1 text-sm text-slate-500">Logo, menu (with dropdowns and mega menus) and the call-to-action button.</p>
+                <p class="mt-1 text-sm text-slate-500">Top bar, logo, menu (with dropdowns and mega menus) and the call-to-action button.</p>
             </div>
             <a href="/" target="_blank" rel="noopener" class="inline-flex items-center gap-2 self-start rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm font-medium text-slate-700 transition hover:bg-slate-50">
                 View website
@@ -35,7 +37,7 @@ const tab = ref('menu');
             </a>
         </div>
 
-        <HeaderPreview :settings="settings" :menu="menu" class="mb-6" />
+        <HeaderPreview :settings="settings" :menu="menu" :contact="contact" class="mb-6" />
 
         <div class="mb-6 inline-flex rounded-lg border border-slate-200 bg-white p-1 text-sm">
             <button
@@ -53,9 +55,9 @@ const tab = ref('menu');
         <div v-show="tab === 'menu'">
             <MenuEditor :menu="menu" :services="services" />
         </div>
-        <!-- One settings form for both tabs; kept mounted so unsaved edits survive tab switches. -->
+        <!-- One settings form for the other tabs; kept mounted so unsaved edits survive tab switches. -->
         <div v-show="tab !== 'menu'">
-            <HeaderSettingsForm :settings="settings" :section="tab" />
+            <HeaderSettingsForm :settings="settings" :contact="contact" :section="tab" />
         </div>
     </AdminLayout>
 </template>

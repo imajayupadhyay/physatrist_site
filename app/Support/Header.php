@@ -7,7 +7,7 @@ use App\Models\Service;
 use App\Models\Setting;
 
 /**
- * Website header: settings (logo, CTA, mega-menu promo) + the menu tree.
+ * Website header: settings (top bar, logo, CTA, mega-menu promo) + the menu tree.
  */
 class Header
 {
@@ -30,7 +30,17 @@ class Header
     {
         $settings = self::settings();
 
+        $topbar = [
+            'showHours' => (bool) $settings['topbar_show_hours'],
+            'text' => $settings['topbar_text'] ?: null,
+            'showPhone' => (bool) $settings['topbar_show_phone'],
+            'showEmail' => (bool) $settings['topbar_show_email'],
+        ];
+        $topbarEmpty = ! $topbar['showHours'] && ! $topbar['text'] && ! $topbar['showPhone'] && ! $topbar['showEmail'];
+
         return [
+            // Hours, phone and email values come from the `contact` prop (Config/site.js).
+            'topbar' => $settings['topbar_visible'] && ! $topbarEmpty ? $topbar : null,
             'logo' => [
                 'url' => Service::imageUrl($settings['logo']),
                 'alt' => $settings['logo_alt'],

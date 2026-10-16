@@ -31,7 +31,7 @@ defineProps({
                 <div class="img"><img :src="service.hero_image || '/images/therapy-room-1.jpg'" :alt="service.title" /></div>
                 <div class="badge">
                     <div class="monogram"><Icon name="i-shield" :size="22" /></div>
-                    <div><b>Ms. Loveleena Sharma</b><small>RCI Registered Clinical Psychologist</small></div>
+                    <div><b>Ms. Lovleena Sharma</b><small>RCI Registered Clinical Psychologist</small></div>
                 </div>
             </div>
         </div>
