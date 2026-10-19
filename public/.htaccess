@@ -5,6 +5,14 @@
 
     RewriteEngine On
 
+    # One address for search engines: mindessencewellness.com → https://www.mindessencewellness.com
+    RewriteCond %{HTTP_HOST} ^mindessencewellness\.com$ [NC]
+    RewriteRule ^ https://www.mindessencewellness.com%{REQUEST_URI} [L,R=301,NE]
+
+    # /index.php and /index.php/path → / and /path (only when typed in the URL, not internal rewrites)
+    RewriteCond %{THE_REQUEST} \s/+index\.php(?:/([^\s?]*))?[\s?] [NC]
+    RewriteRule ^ https://%{HTTP_HOST}/%1 [L,R=301,NE]
+
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]

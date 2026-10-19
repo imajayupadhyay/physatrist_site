@@ -135,6 +135,7 @@ class ServicePagesTest extends TestCase
 
         $xml = $this->get('/sitemap.xml')->assertOk()->assertHeader('Content-Type', 'application/xml')->getContent();
 
+        $this->assertMatchesRegularExpression('#<loc>'.preg_quote(url('/'), '#').'</loc>\s*<lastmod>#', $xml);
         $this->assertStringContainsString('<loc>'.url('/services/anxiety-stress-depression').'</loc>', $xml);
         $this->assertStringNotContainsString('/services/adhd<', $xml);
         $this->assertStringNotContainsString('/services/ocd-therapy<', $xml);

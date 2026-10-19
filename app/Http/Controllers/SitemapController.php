@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Service;
+use App\Models\Setting;
 use Illuminate\Http\Response;
+use Illuminate\Support\Carbon;
 
 /**
  * /sitemap.xml: home + every published, indexable service page.
@@ -12,7 +14,10 @@ class SitemapController extends Controller
 {
     public function __invoke(): Response
     {
-        $urls = collect([['loc' => url('/'), 'lastmod' => null, 'priority' => '1.0']])
+        // The homepage changes whenever its content, the header/footer or a service card is saved.
+        $homeUpdated = collect([Setting::max('updated_at'), Service::max('updated_at')])->filter()->max();
+
+        $urls = collect([['loc' => url('/'), 'lastmod' => $homeUpdated ? Carbon::parse($homeUpdated)->toAtomString() : null, 'priority' => '1.0']])
             ->merge(
                 Service::published()
                     ->where('robots_index', true)

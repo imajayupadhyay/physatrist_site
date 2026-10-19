@@ -1,4 +1,7 @@
 User-agent: *
-Disallow:
+Allow: /
+Disallow: /secure-admin
+Disallow: /appointment-requests
+Disallow: /up
 
 Sitemap: https://www.mindessencewellness.com/sitemap.xml
